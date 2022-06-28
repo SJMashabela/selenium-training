@@ -29,16 +29,29 @@ public class Selenium {
 
     @Test
     public void seleniumTest() throws InterruptedException {
-        assertTrue("1" == "1");
-        //
-//        driver.findElement(By.xpath("")).click();
+        Thread.sleep(5500);
+        driver = visitGoogle();
+        openMapsTab(driver);
+
     }
     @Test
     public void seleniumTest2() throws InterruptedException {
         driver = visitGoogle();
         rightClick(driver);
+
     }
-    
+    public void openMapsTab(WebDriver driver) throws InterruptedException {
+
+        WebElement maps = driver.findElement(By.xpath("//*[@id=\"hdtb-msb\"]/div[1]/div/div[5]/a"));
+        maps.click();
+        WebElement search = driver.findElement(By.xpath("//*[@id=\"searchboxinput\"]"));
+        search.clear();
+        search.sendKeys("Command quality");
+        search.sendKeys(Keys.ENTER);
+        Thread.sleep(3500);
+        driver.findElement(By.xpath("//*[@id=\"QA0Szd\"]/div/div/div[1]/div[2]/div/div[1]/div/div/div[4]/div[1]/button/span")).click();
+//        driver.quit();
+    }
     public void rightClick(WebDriver driver){
         Actions actions = new Actions(driver);
         WebElement element = driver.findElement(By.xpath("//*[@id=\"rso\"]/div[2]/div/div[1]/div/div/div[1]/div/a"));
@@ -49,6 +62,7 @@ public class Selenium {
                 .perform();
         ArrayList<String> tab = new ArrayList<>(driver.getWindowHandles());
         driver.switchTo().window(tab.get(1));
+//        driver.quit();
     }
     public WebDriver launchBrowser(){
         WebDriverManager.chromedriver().setup();
@@ -57,7 +71,7 @@ public class Selenium {
     public WebDriver visitGoogle() throws InterruptedException {
         driver = launchBrowser();
         driver.get(p.getProperty("url"));
-        driver.findElement(By.name("q")).sendKeys(p.getProperty("surname") +" " + p.getProperty("name"));
+        driver.findElement(By.name("q")).sendKeys("Mashabela Sefako");
         Thread.sleep(2000);
         driver.findElement(By.name("q")).click();
         Thread.sleep(2000);
